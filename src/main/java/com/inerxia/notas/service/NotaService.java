@@ -2,6 +2,7 @@ package com.inerxia.notas.service;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +27,11 @@ public class NotaService {
 	}
 
 	public Nota crearNota(Nota nota) {
-
+		LOG.info("CREANDO NOTA");
 		if (Objects.nonNull(nota.getId())) {
 			Optional<Nota> notaOptional = repo.findById(nota.getId());
 			if (notaOptional.isPresent()) {
+				LOG.log(Level.WARNING, "EXCEPCION: REGISTRO DUPLICADO");
 				throw new DataDuplicatedException("exception.data_duplicated.nota.id");
 			}
 		}
